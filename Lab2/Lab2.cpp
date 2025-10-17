@@ -5,13 +5,14 @@
 #include <sstream>
 #include <string>
 
-//задание 1
+// ==================== ЗАДАНИЕ 1: ВСТРОЕННЫЕ ШЕЙДЕРЫ ====================
+
 // Вершинный шейдер
 const char* vertex_shader_source =
 "#version 460 core\n"
 "layout (location = 0) in vec3 aPos;" // attribute position
-"void main(){"
-" gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);"
+"void main(){\n"
+" gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
 "}";
 
 // Фрагментный шейдер
@@ -19,12 +20,67 @@ const char* fragment_shader_source =
 "#version 460 core\n"
 "out vec4 FragColor;\n"
 "uniform vec4 ourColor;\n" // Uniform переменная для изменения цвета
-"void main()\n"
-"{\n"
+"void main(){\n"
 "   FragColor = ourColor;\n"
 "}";
 
-// задание 2
+GLuint compileEmbeddedShaders() {
+
+    // Компиляция вершинного шейдера
+    GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertex_shader, 1, &vertex_shader_source, NULL);
+    glCompileShader(vertex_shader);
+
+    // Проверка ошибок компиляции вершинного шейдера
+    int success;
+    char infoLog[512];
+    glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(vertex_shader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+        glDeleteShader(vertex_shader);
+        return 0;
+    }
+
+    // Компиляция фрагментного шейдера
+    GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragment_shader, 1, &fragment_shader_source, NULL);
+    glCompileShader(fragment_shader);
+
+    // Проверка ошибок компиляции фрагментного шейдера
+    glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(fragment_shader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+        glDeleteShader(fragment_shader);
+        return 0;
+    }
+
+    // Создание шейдерной программы
+    GLuint shader_program = glCreateProgram();
+    glAttachShader(shader_program, vertex_shader);
+    glAttachShader(shader_program, fragment_shader);
+    glLinkProgram(shader_program);
+
+    // Проверка ошибок линковки
+    glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(shader_program, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+        glDeleteShader(shader_program);
+        return 0;
+    }
+
+    // Удаляем шейдеры, так как они уже добавлены в программу
+    glDeleteShader(vertex_shader);
+    glDeleteShader(fragment_shader);
+
+    return shader_program;
+}
+
+
+// ==================== ЗАДАНИЕ 2: ШЕЙДЕРЫ ИЗ ФАЙЛОВ ====================
+
 // Функция для чтения шейдера из файла
 char* readShaderFromFile(const char* filePath) {
     std::ifstream file(filePath);
@@ -121,6 +177,8 @@ GLuint createShaderProgram(const char* vertexPath, const char* fragmentPath) {
     return program;
 }
 
+// ==================== БИБЛИОТЕКА UNIFORM ПЕРЕМЕННЫХ ====================
+
 // Функции для установки uniform переменных (библиотека uniform)
 void setUniform1i(GLuint program, const char* name, int value) {
     glUniform1i(glGetUniformLocation(program, name), value);
@@ -141,6 +199,8 @@ void setUniform3f(GLuint program, const char* name, float x, float y, float z) {
 void setUniform4f(GLuint program, const char* name, float x, float y, float z, float w) {
     glUniform4f(glGetUniformLocation(program, name), x, y, z, w);
 }
+
+// ==================== ОСНОВНАЯ ПРОГРАММА ====================
 
 int main()
 {
@@ -178,9 +238,6 @@ int main()
         return 1;
     }
 
-    // Выводим версию OpenGL для проверки
-    std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
-
     // Координаты вершин для трапеции (верх шире низа)
     float vertices[] = {
         // x,    y,    z
@@ -196,6 +253,7 @@ int main()
         0, 2, 3   // второй треугольник
     };
 
+    // Настройка буферов
     // Генерируем VAO, VBO, EBO
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -220,58 +278,20 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    /*
-    // Компиляция вершинного шейдера
-    GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &vertex_shader_source, NULL);
-    glCompileShader(vertex_shader); 
+    // ==================== ВЫБОР РЕЖИМА РАБОТЫ ====================
+    // РАСКОММЕНТИРОВАТЬ НУЖНУЮ СТРОКУ ДЛЯ ВЫБОРА РЕЖИМА:
 
-    // Проверка ошибок компиляции вершинного шейдера
-    int success;
-    char infoLog[512];
-    glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(vertex_shader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    } 
+    // ЗАДАНИЕ 1: Встроенные шейдеры
+    shader_program = compileEmbeddedShaders();
 
-      // Компиляция фрагментного шейдера
-    GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &fragment_shader_source, NULL);
-    glCompileShader(fragment_shader);
 
-    // Проверка ошибок компиляции фрагментного шейдера
-    glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(fragment_shader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-
-    // Создание шейдерной программы
-    shader_program = glCreateProgram();
-    glAttachShader(shader_program, vertex_shader);
-    glAttachShader(shader_program, fragment_shader);
-    glLinkProgram(shader_program);
-   
-    // Проверка ошибок линковки
-    glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(shader_program, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-    }
-
-    // Удаляем шейдеры, так как они уже добавлены в программу
-    glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader);
-
-    */
-
-    shader_program = createShaderProgram("vertex_shader.glsl", "fragment_shader.glsl");
+    // ЗАДАНИЕ 2: Шейдеры из файлов
+   /* shader_program = createShaderProgram("vertex_shader.glsl", "fragment_shader.glsl");
     if (shader_program == 0) {
         std::cout << "Failed to create shader program!" << std::endl;
         glfwTerminate();
         return 1;
-    }
+    }*/
 
     // Создаем основной цикл программы
     while (!glfwWindowShouldClose(window)) {
@@ -279,22 +299,24 @@ int main()
         glClearColor(1.0f, 0.4f, 0.1f, 1.0f); // Оранжевый фон
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Используем нашу шейдерную программу
+        // Используем свою шейдерную программу
         glUseProgram(shader_program);
 
-        // ЗАДАНИЕ 1: Изменение цвета в зависимости от времени
+        // Анимированный цвет
         float timeValue = static_cast<float>(glfwGetTime());
         float greenValue = (sinf(timeValue) / 2.0f) + 0.5f; // Значение от 0.0 до 1.0
         float redValue = (cosf(timeValue) / 2.0f) + 0.5f;   // Значение от 0.0 до 1.0
 
-        /*
+        // ==================== ВЫБОР МЕТОДА УСТАНОВКИ UNIFORM ====================
+
+        // ЗАДАНИЕ 1: Стандартный метод
         // Получаем location uniform переменной и устанавливаем значение
         int vertexColorLocation = glGetUniformLocation(shader_program, "ourColor");
         glUniform4f(vertexColorLocation, redValue, greenValue, 0.3f, 1.0f);
-        */
 
-        //ЗАДАНИЕ 2: Используем библеотеку UNIFORM
-        setUniform4f(shader_program, "ourColor", redValue, greenValue, 0.3f, 1.0f);
+
+        ////ЗАДАНИЕ 2: Используем библеотеку UNIFORM
+        //setUniform4f(shader_program, "ourColor", redValue, greenValue, 0.3f, 1.0f);
 
         // Рисуем трапецию
         glBindVertexArray(VAO);
@@ -311,5 +333,7 @@ int main()
     glDeleteProgram(shader_program);
 
     glfwTerminate(); // Завершение работы контекста.
+
+    std::cout << "SUCCESS: Program terminated correctly!" << std::endl;
     return 0;
 }

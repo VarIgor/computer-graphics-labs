@@ -42,10 +42,6 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
@@ -53,14 +49,18 @@
               "Name": "ST:133:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Lab2.cpp",
               "DocumentMoniker": "C:\\Visual Projects\\Lab2\\Lab2.cpp",
               "RelativeDocumentMoniker": "Lab2.cpp",
-              "ToolTip": "C:\\Visual Projects\\Lab2\\Lab2.cpp",
-              "RelativeToolTip": "Lab2.cpp",
-              "ViewState": "AgIAALQAAAAAAAAAAAAAAC0BAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Visual Projects\\Lab2\\Lab2.cpp*",
+              "RelativeToolTip": "Lab2.cpp*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-15T11:00:08.164Z",
               "EditorCaption": ""

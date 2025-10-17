@@ -5,6 +5,12 @@
 #include <sstream>
 #include <string>
 
+// ==================== КОНФИГУРАЦИЯ ====================
+// ПЕРЕМЕННАЯ ДЛЯ ВЫБОРА РЕЖИМА РАБОТЫ:
+// 1 - Задание 1: Встроенные шейдеры + стандартные uniform
+// 2 - Задание 2: Шейдеры из файлов + библиотека uniform
+#define WORK_MODE 2
+
 // ==================== ЗАДАНИЕ 1: ВСТРОЕННЫЕ ШЕЙДЕРЫ ====================
 
 // Вершинный шейдер
@@ -25,6 +31,7 @@ const char* fragment_shader_source =
 "}";
 
 GLuint compileEmbeddedShaders() {
+    std::cout << "=== TASK 1: Using Built-in Shaders ===" << std::endl;
 
     // Компиляция вершинного шейдера
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
@@ -78,7 +85,6 @@ GLuint compileEmbeddedShaders() {
     return shader_program;
 }
 
-
 // ==================== ЗАДАНИЕ 2: ШЕЙДЕРЫ ИЗ ФАЙЛОВ ====================
 
 // Функция для чтения шейдера из файла
@@ -131,6 +137,7 @@ GLuint compileShader(GLenum type, const char* source) {
 
 // Основная функция для создания шейдерной программы из файлов
 GLuint createShaderProgram(const char* vertexPath, const char* fragmentPath) {
+    std::cout << "=== TASK 2: Loading shaders from files ===" << std::endl;
     // Читаем шейдеры из файлов
     char* vertexSource = readShaderFromFile(vertexPath);
     char* fragmentSource = readShaderFromFile(fragmentPath);
@@ -207,6 +214,27 @@ int main()
     // Добавляем переменные для VBO, VAO, EBO и шейдерной программы
     GLuint VBO, VAO, EBO, shader_program;
 
+    // Вывод информации о текущем режиме работы
+    std::cout << "===============" << std::endl;
+    std::cout << "LABORATORY WORK #2" << std::endl;
+    std::cout << "Current operating mode: ";
+
+    if (WORK_MODE == 1) {
+        std::cout << "TASK 1" << std::endl;
+        std::cout << "- Built-in shaders" << std::endl;
+        std::cout << "- Standard uniform variables" << std::endl;
+    }
+    else if (WORK_MODE == 2) {
+        std::cout << "TASK 2" << std::endl;
+        std::cout << "- Shaders from files" << std::endl;
+        std::cout << "- Uniform Variables Library" << std::endl;
+    }
+    else {
+        std::cout << "UNKNOWN MODE!" << std::endl;
+        return -1;
+    }
+    std::cout << "=========================================" << std::endl;
+
     // Подключаем проверку на инициализацию через проверку glfwinit()
     if (!glfwInit()) {
         fprintf(stderr, "ERROR: could not start GLFW3\n");
@@ -279,19 +307,21 @@ int main()
     glBindVertexArray(0);
 
     // ==================== ВЫБОР РЕЖИМА РАБОТЫ ====================
-    // РАСКОММЕНТИРОВАТЬ НУЖНУЮ СТРОКУ ДЛЯ ВЫБОРА РЕЖИМА:
 
-    // ЗАДАНИЕ 1: Встроенные шейдеры
+    if (WORK_MODE == 1) {
+        // ЗАДАНИЕ 1: Встроенные шейдеры
     shader_program = compileEmbeddedShaders();
-
-
-    // ЗАДАНИЕ 2: Шейдеры из файлов
-   /* shader_program = createShaderProgram("vertex_shader.glsl", "fragment_shader.glsl");
+    }
+    else if (WORK_MODE == 2) {
+        // ЗАДАНИЕ 2: Шейдеры из файлов
+        shader_program = createShaderProgram("vertex_shader.glsl", "fragment_shader.glsl");
+    }
+    
     if (shader_program == 0) {
         std::cout << "Failed to create shader program!" << std::endl;
         glfwTerminate();
         return 1;
-    }*/
+    }
 
     // Создаем основной цикл программы
     while (!glfwWindowShouldClose(window)) {
@@ -309,19 +339,21 @@ int main()
 
         // ==================== ВЫБОР МЕТОДА УСТАНОВКИ UNIFORM ====================
 
+        if (WORK_MODE == 1) {
         // ЗАДАНИЕ 1: Стандартный метод
         // Получаем location uniform переменной и устанавливаем значение
         int vertexColorLocation = glGetUniformLocation(shader_program, "ourColor");
         glUniform4f(vertexColorLocation, redValue, greenValue, 0.3f, 1.0f);
+        }
+        else if (WORK_MODE == 2) {
+            // ЗАДАНИЕ 2: Использование библиотеки UNIFORM
+            setUniform4f(shader_program, "ourColor", redValue, greenValue, 0.3f, 1.0f);
+        }
 
-
-        ////ЗАДАНИЕ 2: Используем библеотеку UNIFORM
-        //setUniform4f(shader_program, "ourColor", redValue, greenValue, 0.3f, 1.0f);
-
-        // Рисуем трапецию
+        // Отрисовка трапеции
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
+        // Обновление экрана
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -334,6 +366,10 @@ int main()
 
     glfwTerminate(); // Завершение работы контекста.
 
-    std::cout << "SUCCESS: Program terminated correctly!" << std::endl;
+    std::cout << "=============" << std::endl;
+    std::cout << "THE PROGRAM HAS SUCCESSFULLY COMPLETED!" << std::endl;
+    std::cout << "Operating mode: TASK " << WORK_MODE << std::endl;
+    std::cout << "=============" << std::endl;
+
     return 0;
 }

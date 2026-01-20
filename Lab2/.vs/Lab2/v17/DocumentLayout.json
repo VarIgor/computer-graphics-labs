@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Visual Projects\\Lab2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{11B60E9B-E4AA-4389-BC9E-05136FF0D2AD}|Lab2.vcxproj|C:\\Visual Projects\\Lab2\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{11B60E9B-E4AA-4389-BC9E-05136FF0D2AD}|Lab2.vcxproj|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{11B60E9B-E4AA-4389-BC9E-05136FF0D2AD}|Lab2.vcxproj|C:\\Visual Projects\\Lab2\\Lab2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{11B60E9B-E4AA-4389-BC9E-05136FF0D2AD}|Lab2.vcxproj|solutionrelative:Lab2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11B60E9B-E4AA-4389-BC9E-05136FF0D2AD}|Lab2.vcxproj|C:\\Visual Projects\\Lab2\\fragment_shader.glsl||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{11B60E9B-E4AA-4389-BC9E-05136FF0D2AD}|Lab2.vcxproj|solutionrelative:fragment_shader.glsl||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,15 +58,28 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "fragment_shader.glsl",
+              "DocumentMoniker": "C:\\Visual Projects\\Lab2\\fragment_shader.glsl",
+              "RelativeDocumentMoniker": "fragment_shader.glsl",
+              "ToolTip": "C:\\Visual Projects\\Lab2\\fragment_shader.glsl",
+              "RelativeToolTip": "fragment_shader.glsl",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-01-18T08:45:51.256Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": ".gitignore",
-              "DocumentMoniker": "C:\\Visual Projects\\Lab2\\.gitignore",
-              "RelativeDocumentMoniker": ".gitignore",
-              "ToolTip": "C:\\Visual Projects\\Lab2\\.gitignore",
-              "RelativeToolTip": ".gitignore",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAADEAAAAFAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG/SURBVDhPrZRNTgIxFMerDIaEhHgU97JxwUKGGaNeQJdyCY0XUBDWGhg4AB\u002BuvQk7OQCRFTP1fXWmMxUMCT94ee177eu/LVQdFK31kTSJ0WgEIa0SMJ2A6QTHcF9iicQqlYpa/6zv2\u002B2HD5nuEkWR/l4udRzHZBtjGzFor1YrPR6P9WKx0MNhpN96vTuZThyLJ1AJLK/iJFFxjBanBsXIozqkWq2qev1c1Wq19063e0ZBwBNP4JaQ6WRC/i8ajQb5wWBAvnxyghpOqQPkC8L5IEEQKjgxaqOTFsCd65tb6nmlkur1\u002BxwXCgX58KfT7QptwvCK52wrSLcJvtUKOABkQ6HFXwbGsmMRBkchzpjNphLZDSrEn5G1qnsp\u002BPEtheloXouRnXDTTjhb5tXmeyg0IgzuliHp\u002By0OANbiOCDXp1IYo3mMUxBT8/mMA/8QhGH6ZzC4Zwi5ZqoQB9M3h62I/\u002B/SAQpniBmtPvdQyGeYUdgyX8pl05eIBSxmTzQYEYbc42AuJQWLGJNQEcrJG4A4BTHneSW2sqfKOyybkxXMPbAvrx3IsyLzkPJFmUcWYtDntjG6lIvnp8cvKXNIlPoFvstpJRlQPIAAAAAASUVORK5CYII=",
-              "WhenOpened": "2025-12-25T10:01:05.45Z",
+              "Title": "Lab2.cpp",
+              "DocumentMoniker": "C:\\Visual Projects\\Lab2\\Lab2.cpp",
+              "RelativeDocumentMoniker": "Lab2.cpp",
+              "ToolTip": "C:\\Visual Projects\\Lab2\\Lab2.cpp",
+              "RelativeToolTip": "Lab2.cpp",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAAAA0AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-01-17T09:06:16.502Z",
               "EditorCaption": ""
             }
           ]

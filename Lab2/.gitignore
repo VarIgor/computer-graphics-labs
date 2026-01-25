@@ -39,10 +39,6 @@ Thumbs.db
 *.temp
 *.cache
 
-# ==================== PROJECT FILES ====================
-*.vcxproj
-*.sln
-*.suo
 
 # ==================== DOCUMENTS ====================
 *.pdf

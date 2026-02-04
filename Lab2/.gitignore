@@ -1,7 +1,6 @@
 # ==================== VISUAL STUDIO ====================
 .vs/
 *.vcxproj.user
-*.vcxproj.filters
 *.sln.docstates
 *.suo
 *.aps
